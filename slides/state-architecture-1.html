@@ -1,20 +1,21 @@
 <section>
-  <h3>State Architecture</h3>
+  <h3>Stateful Architecture</h3>
   <ol>
     <li class="fragment">
       <h4>Core Backbone philosophy</h4>
-      <small>View renders model; view updates when a model changes.</small>
+      <small>View is bound to a model; view updates when its model changes.</small>
     </li>
     <li class="fragment">
-      <h4>Implementation</h4>
-      <small>Each and every change to the DOM corresponds to a model change.</small>
+      <h4>Key Rule</h4>
+      <small>Each and every change to the DOM starts with a model change.</small>
     </li>
     <li class="fragment">
-      <h4>Perfected implementation</h4>
-      <small>The view is <em>only</em> responsible for "dumb" updates.</small>
+      <h4>Decoupled Implementation</h4>
+      <small>The view is <em>only</em> responsible for simple updates and broadcasting user interactions.</small>
     </li>
     <li class="fragment">
       <h4>What about presentation logic?</h4>
+      <small>Need a container that handles update to the state.</small>
     </li>
   </ol>
 </section>
