@@ -14,14 +14,6 @@
 
 // Include theme-specific fonts
 
-@import "../../../gary/Gary/dist/gary.css";
-
-// Gary path overrides
-//@assets-path: "../../../";
-//@GaryFontPath: '@{assets-path}/gary/Gary/font';
-//@FontAwesomePath: '@{assets-path}/font-awesome/font';
-
-
 // Override theme settings (see ../template/settings.scss)
 $mainFont: 'BrandonText', sans-serif;
 $mainColor: #333;
