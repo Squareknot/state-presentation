@@ -53,6 +53,13 @@ $selectionBackgroundColor: #134674;
   box-shadow: none;
 }
 
+.reveal pre.inline {
+  display: inline;
+  white-space: nowrap;
+  font-size: 0.7em;
+  box-shadow: none;
+}
+
 
 // Background generator
 //@mixin bodyBackground() {

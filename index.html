@@ -129,6 +129,30 @@
         </section>
         <section>
           <h3>Marionette.StateService</h3>
+          <h4>State-aware container for business logic</h4>
+          <ul>
+            <li>Creates its own state model by default</li>
+            <li>May instead bind to an existing model</li>
+            <li>Delegates set/get to state model</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Marionette.StateService</h3>
+          <h4>Usage</h4>
+          <ol>
+            <li>Initialize state attributes with <pre class="inline">defaultState</pre> hash.</li>
+            <li>Bind handlers to event emitters or models using <pre class="inline">this.bindEntityEvents(...)</pre>.</li>
+            <li>Call <pre class="inline">this.stateSet(...)</pre> as the last statement of each handler.</li>
+          </ol>
+        </section>
+        <section>
+          <h3>Marionette.StateService</h3>
+          <h4>Installation</h4>
+          <ol>
+            <li>https://github.com/Squareknot/marionette.state-service</li>
+            <li><pre class="inline">npm install marionette.state-service</pre></li>
+            <li><pre class="inline">bower install marionette.state-service</pre></li>
+          </ol>
         </section>
         <section>
           <h3>Questions</h3>

@@ -24,6 +24,12 @@
   border: none;
   box-shadow: none; }
 
+.reveal pre.inline {
+  display: inline;
+  white-space: nowrap;
+  font-size: 0.7em;
+  box-shadow: none; }
+
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
