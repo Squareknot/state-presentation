@@ -63,32 +63,16 @@
           <h2 style="margin-top: -120px">SQUAREKNOT</h2>
         </section>
         <section>
-          <div class="fade-out" style="margin-top: 100px">
-            <p>Technology Stack</p>
-            <div class="squareknot logo">
-              <img data-fragment-index="1" class="fragment" src="assets/symfony_black_03.svg" title="Backbone" alt="Backbone" height="150" width="150">
-              <img data-fragment-index="2" class="fragment" src="assets/Mariadb-seal-flat-browntext-alt.svg" title="Marionette" alt="Marionette" height="150" width="150">
-              <img data-fragment-index="3" class="fragment" src="assets/backbone.svg" title="Backbone" alt="Backbone" height="150" width="150">
-              <img data-fragment-index="4" class="fragment" src="assets/marionette.svg" title="Marionette" alt="Marionette" height="150" width="150">
-              <img data-fragment-index="5" class="fragment" src="assets/requirejs-logo.svg" title="Backbone" alt="Backbone" height="150" width="150">
-              <img data-fragment-index="6" class="fragment" src="assets/grunt-logo.svg" title="Marionette" alt="Marionette" height="150" width="150">
-            </div>
-          </div>
-        </section>
-        <section>
           <h3>Project Viewer Requirements</h3>
           <ol>
             <li class="fragment">
-              <h4>Three States</h4><small class="fragment">Project Overview, Steps, Branches</small>
+              <h4>Three Application States</h4><small>Overview State, Step State, Branch State</small>
             </li>
             <li class="fragment">
-              <h4>Multiple Sources</h4><small class="fragment">States are based on data models and user interaction</small>
+              <h4>State Interpretation</h4><small>States of Steps and Nodes depend on Application State</small>
             </li>
             <li class="fragment">
-              <h4>Three States</h4><small class="fragment">Project Overview, Steps, Branches</small>
-            </li>
-            <li class="fragment">
-              <h4>Data and User Interaction</h4><small class="fragment">States are based on data models and user interaction</small>
+              <h4>Multiple Sources</h4><small>States are based on data models and user interaction</small>
             </li>
           </ol>
         </section>
@@ -118,6 +102,266 @@
         </section>
         <section>
           <h3>Application State</h3>
+          <small>Domain, Use Case Service, State Machine diagram</small>
+        
+        </section>
+        <section>
+            <h3>Application State:Domain</h3>
+            <p>Goal: Create and Manage Persisted Entities</p>
+            <pre>
+                <code data-trim style="font-size:14px; line-height:14px">
+        ProjectDomainService = Marionette.Object.extend({
+        
+        initialize: function () {
+            this.createEntities();
+            this.channel = Radio.channel('project');
+        },
+        
+        start: function(data){
+            this.setEntities(data);
+            this.fetchEntities(data);
+        },
+        
+        //Getters and Setters
+        getProject: function () {
+            return this.models.projectModel;
+        },
+        
+        getSteps: function () {
+            return this.collections.stepsCollection;
+        },
+        
+        getStep: function ( id ) {
+            return this.collections.stepsCollection.findWhere({ id: id });
+        },
+        
+        getCurrentStep: function () {
+            var row = this.channel.request('state:row');
+            var step = this._rowToStep(row);
+            return this.getStep(step);
+        },...
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Application State:StateMachine</h3>
+            <p>Goal: Compute State based on Domain and User Interactions</p>
+            <pre>
+                <code data-trim style="font-size:14px; line-height:14px">
+        var ProjectStateService = Marionette.Object.extend({
+        
+        initialize: function (domain) {
+            this.domain = domain;
+        },
+        start: function() {
+            this.stateModel = new State();
+            this.channel = Radio.channel('project');
+            this.createFSM();
+            this.listenTo(this.channel, 'domain:fetched', this.setState);
+            this.listenTo(this.channel, 'domain:fetching', this.setLoadingState);
+            this.listenToOnce(this.stateModel, "change", function(){ this.channel.trigger('domain:ready');});
+            this.listenTo(this.stateModel, 'all', function(event, arguments){ this.channel.trigger('state:'+event, arguments) });
+            ...
+        },
+        
+        stop: function(){
+            ...
+        },
+        
+        //Getters and Setters
+        setLoadingState: function(){
+            this.stateMachine.handle('loading');
+        },
+        
+        setState: function (data) {
+            this.stateMachine.setRow(data.row);
+            this.stateMachine.setColumn(data.column);
+            this.stateMachine.handle('loaded');
+        },
+        
+        getState: function (attribute) {
+            if(attribute){
+                return this.stateModel.get(attribute);
+            }
+            return this.stateModel;
+        },
+        
+        changeState: function (event, parameters) {
+            this.stateMachine.handle(event, parameters);
+        },
+        
+        createFSM: function(){
+            var self = this;
+            this.stateMachine = new machina.Fsm({
+                initialState: "loading",
+                parent: self,
+                stateModel: this.stateModel,
+                inputs: {
+                    row: 0,
+                    column: 0
+                },
+        
+                states : {
+                    'loading': {
+                        _onEnter: function() {
+                            debugLogger.log('Loading...');
+                        },
+        
+                        _onExit: function() {
+                            debugLogger.log('Loaded');
+                        },
+        
+                        'loaded': function(){
+                            if(this.inputs.row === 0){
+                                this.setColumn(0);
+                                this.transition('cover');
+                            }
+                            else{
+                                if(this.inputs.column === 0){
+                                    this.transition('steps');
+                                }
+                                else{
+                                    this.transition('column');
+                                }
+                            }
+                        }
+                    },
+        
+                    "cover" : {
+                    _onEnter: function() {
+                        ...
+                    },
+        
+                    _onExit: function() {
+                        ...
+                    },
+        
+                    "loading": function(){
+                        this.transition('loading');
+                    },
+        
+                    "focus:cover" : function() {
+                        this.setRow(0);
+                        this.setColumn(0);
+                        this.stateModel.set(this.inputs);
+                    },
+        
+                    "focus:row" : function( row ) {
+                        debugLogger.log('cover to step');
+                        this.setRow(row);
+                        this.transition('steps');
+                    }
+        
+                },
+        
+        "steps" : {
+        _onEnter: function() {
+        debugLogger.log('enter steps State');
+        this.handle('focus:row')
+        },
+        
+        _onExit: function() {
+        debugLogger.log('exit steps State');
+        },
+        
+        "loading": function(){
+        this.transition('loading');
+        },
+        
+        "focus:row" : function( row ) {
+        debugLogger.log('step state model change');
+        this.setRow(row);
+        // Only reset column if row has changed
+        //TODO: Row shouldnt change is column is changing
+        if (row && row !== this.stateModel.get('row')) {
+        this.setColumn(0);
+        }
+        this.stateModel.set(this.inputs);
+        },
+        
+        "focus:cover" : function() {
+        debugLogger.log('step to cover');
+        this.transition('cover');
+        },
+        
+        "focus:column" : function( column ) {
+        debugLogger.log('step to column');
+        this.setColumn(column);
+        this.transition('columns');
+        }
+        },
+        
+        "columns" : {
+        _onEnter: function() {
+        debugLogger.log('enter columns State');
+        this.handle('focus:column');
+        },
+        
+        _onExit: function() {
+        debugLogger.log('exit columns State');
+        },
+        
+        "loading": function(){
+        this.transition('loading');
+        },
+        
+        "focus:column" : function( column ) {
+        debugLogger.log('column state model change');
+        this.setColumn(column);
+        this.stateModel.set(this.inputs);
+        },
+        
+        "focus:row" : function( row ) {
+        debugLogger.log('columns to step');
+        if(this.inputs.row !== row ){
+        debugLogger.log('CANT TRANSITION BETWEEN DIFFERENT STEPS IN column STATE');
+        }
+        this.transition('steps');
+        }
+        }
+        }
+        });
+        }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Application State:Domain</h3>
+            <p>Goal: Create and Manage Persisted Entities</p>
+            <pre>
+                <code data-trim style="font-size:14px; line-height:14px">
+        ProjectDomainService = Marionette.Object.extend({
+        
+        initialize: function () {
+            this.createEntities();
+            this.channel = Radio.channel('project');
+        },
+        
+        start: function(data){
+            this.setEntities(data);
+            this.fetchEntities(data);
+        },
+        
+        //Getters and Setters
+        getProject: function () {
+            return this.models.projectModel;
+        },
+        
+        getSteps: function () {
+            return this.collections.stepsCollection;
+        },
+        
+        getStep: function ( id ) {
+            return this.collections.stepsCollection.findWhere({ id: id });
+        },
+        
+        getCurrentStep: function () {
+            var row = this.channel.request('state:row');
+            var step = this._rowToStep(row);
+            return this.getStep(step);
+        },...
+                </code>
+            </pre>
         </section>
         <section>
           <h3>Component State</h3>
