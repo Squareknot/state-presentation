@@ -1,0 +1,38 @@
+<section>
+    <h3>Application State:Domain</h3>
+    <p>Goal: Create and Manage Persisted Entities</p>
+    <pre>
+        <code data-trim style="font-size:14px; line-height:14px">
+ProjectDomainService = Marionette.Object.extend({
+
+initialize: function () {
+    this.createEntities();
+    this.channel = Radio.channel('project');
+},
+
+start: function(data){
+    this.setEntities(data);
+    this.fetchEntities(data);
+},
+
+//Getters and Setters
+getProject: function () {
+    return this.models.projectModel;
+},
+
+getSteps: function () {
+    return this.collections.stepsCollection;
+},
+
+getStep: function ( id ) {
+    return this.collections.stepsCollection.findWhere({ id: id });
+},
+
+getCurrentStep: function () {
+    var row = this.channel.request('state:row');
+    var step = this._rowToStep(row);
+    return this.getStep(step);
+},...
+        </code>
+    </pre>
+</section>
