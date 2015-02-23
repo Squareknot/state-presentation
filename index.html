@@ -1,146 +1,146 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
 
-		<title>Backbone and Leveraging the Power of Open Source</title>
+    <title>Backbone and Leveraging the Power of Open Source</title>
 
-		<meta name="description" content="Backbone and Leveraging the Power of Open Source">
-		<meta name="author" content="Jide Osan">
+    <meta name="description" content="Backbone and Leveraging the Power of Open Source">
+    <meta name="author" content="Jide Osan">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/squareknot.css" id="theme">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/squareknot.css" id="theme">
 
-		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
 
-	<body>
+  <body>
 
-		<div class="reveal">
+    <div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-				<section data-transition="fade">
-					<div class="squareknot logo">
-						<img src="assets/logo-green.svg" title="Squareknot" alt="Squareknot" height="500" width="500">
-					</div>
-					<p>
-						<small><a href="mailto">jide@squareknot.com</a> / <a href="http://twitter.com/jideosan">@jideosan</a></small>
-                        <small><a href="mailto">ian@squareknot.com</a> / <a href="http://twitter.com/jideosan">@ianmstew</a></small>
-					</p>
-				</section>
-                <section>
-                    <p>Squareknot is a way to make beautiful, branching step by step guides.</p>
-                </section>
-                <section data-background="assets/images.png"></section>
-                <section  data-transition="fade" data-background="assets/projects.png">
-                </section>
-                <section  data-transition="fade" data-background="assets/branches.png">
-                </section>
-                <section>
-                    <p>We can learn a lot from each other by <span class="bluetext">sharing</span> our ideas and <span class="bluetext">collaboratively</span> working together to <span class="bluetext">improve</span> them</p>
-                </section>
-                <section>
-                    <div class="squareknot logo">
-                        <img src="assets/logo-green.svg" title="Squareknot" alt="Squareknot" height="500" width="500">
-                    </div>
-                    <h2 style="margin-top: -120px">SQUAREKNOT</h2>
-                </section>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section data-transition="fade">
+          <div class="squareknot logo">
+            <img src="assets/logo-green.svg" title="Squareknot" alt="Squareknot" height="500" width="500">
+          </div>
+          <p>
+            <small><a href="mailto">jide@squareknot.com</a> / <a href="http://twitter.com/jideosan">@jideosan</a></small>
+            <small><a href="mailto">ian@squareknot.com</a> / <a href="http://twitter.com/jideosan">@ianmstew</a></small>
+          </p>
+        </section>
+        <section>
+          <p>Squareknot is a way to make beautiful, branching step by step guides.</p>
+        </section>
+        <section data-background="assets/images.png"></section>
+        <section  data-transition="fade" data-background="assets/projects.png">
+        </section>
+        <section  data-transition="fade" data-background="assets/branches.png">
+        </section>
+        <section>
+          <p>We can learn a lot from each other by <span class="bluetext">sharing</span> our ideas and <span class="bluetext">collaboratively</span> working together to <span class="bluetext">improve</span> them</p>
+        </section>
+        <section>
+          <div class="squareknot logo">
+            <img src="assets/logo-green.svg" title="Squareknot" alt="Squareknot" height="500" width="500">
+          </div>
+          <h2 style="margin-top: -120px">SQUAREKNOT</h2>
+        </section>
 
-				<section>
-					<div class="fade-out" style="margin-top: 100px">
-						<p>Technology Stack</p>
-						<div class="squareknot logo">
-							<img data-fragment-index="1" class="fragment" src="assets/symfony_black_03.svg" title="Backbone" alt="Backbone" height="150" width="150">
-							<img data-fragment-index="2" class="fragment" src="assets/Mariadb-seal-flat-browntext-alt.svg" title="Marionette" alt="Marionette" height="150" width="150">
-							<img data-fragment-index="3" class="fragment" src="assets/backbone.svg" title="Backbone" alt="Backbone" height="150" width="150">
-							<img data-fragment-index="4" class="fragment" src="assets/marionette.svg" title="Marionette" alt="Marionette" height="150" width="150">
-							<img data-fragment-index="5" class="fragment" src="assets/requirejs-logo.svg" title="Backbone" alt="Backbone" height="150" width="150">
-							<img data-fragment-index="6" class="fragment" src="assets/grunt-logo.svg" title="Marionette" alt="Marionette" height="150" width="150">
-						</div>
-					</div>
-				</section>
-                <section>
-                    <h3>Project Viewer Requirements</h3>
-                    <ol>
-                        <li class="fragment">
-                            <h4>Three States</h4><small class="fragment">Project Overview, Steps, Branches</small>
-                        </li>
-                        <li class="fragment">
-                            <h4>Multiple Sources</h4><small class="fragment">States are based on data models and user interaction</small>
-                        </li>
-                        <li class="fragment">
-                            <h4>Three States</h4><small class="fragment">Project Overview, Steps, Branches</small>
-                        </li>
-                        <li class="fragment">
-                            <h4>Data and User Interaction</h4><small class="fragment">States are based on data models and user interaction</small>
-                        </li>
-                    </ol>
-                </section>
+        <section>
+          <div class="fade-out" style="margin-top: 100px">
+            <p>Technology Stack</p>
+            <div class="squareknot logo">
+              <img data-fragment-index="1" class="fragment" src="assets/symfony_black_03.svg" title="Backbone" alt="Backbone" height="150" width="150">
+              <img data-fragment-index="2" class="fragment" src="assets/Mariadb-seal-flat-browntext-alt.svg" title="Marionette" alt="Marionette" height="150" width="150">
+              <img data-fragment-index="3" class="fragment" src="assets/backbone.svg" title="Backbone" alt="Backbone" height="150" width="150">
+              <img data-fragment-index="4" class="fragment" src="assets/marionette.svg" title="Marionette" alt="Marionette" height="150" width="150">
+              <img data-fragment-index="5" class="fragment" src="assets/requirejs-logo.svg" title="Backbone" alt="Backbone" height="150" width="150">
+              <img data-fragment-index="6" class="fragment" src="assets/grunt-logo.svg" title="Marionette" alt="Marionette" height="150" width="150">
+            </div>
+          </div>
+        </section>
+        <section>
+          <h3>Project Viewer Requirements</h3>
+          <ol>
+            <li class="fragment">
+              <h4>Three States</h4><small class="fragment">Project Overview, Steps, Branches</small>
+            </li>
+            <li class="fragment">
+              <h4>Multiple Sources</h4><small class="fragment">States are based on data models and user interaction</small>
+            </li>
+            <li class="fragment">
+              <h4>Three States</h4><small class="fragment">Project Overview, Steps, Branches</small>
+            </li>
+            <li class="fragment">
+              <h4>Data and User Interaction</h4><small class="fragment">States are based on data models and user interaction</small>
+            </li>
+          </ol>
+        </section>
 <!--Everything below this line, is here to demonstrate how to make certain slides (like the code slide)-->
 
-                <section>
-                    <ol>
-                        <li><h4>Set a Goal and Objective(s)</h4>
-                            <p class="fragment" data-fragment-index="1" style="font-size: 0.6em">"I become a better developer and
-                                <span class="fragment fade-out" data-fragment-index="2" >build facebook"</span>
-                                <span class="fragment" data-fragment-index="2" style="margin-left: -149px">build a feed of Squareknot Projects"</span></p>
-                        </li>
-                        <li class="fragment"><h4>Learn an "Open Source" Language</h4><small class="fragment">"Javascript looks cool"</small></li>
-                        <li style="opacity: 0"><h4>Use Open Source Projects</h4><small>"Backbone has a great community"</small></li>
-                        <li style="opacity: 0"><h4>Get Involved in the Community</h4><small>"Downloading Gitter"</small></li>
-                    </ol>
-                </section>
-                <section>
-                    <div class="squareknot logo">
-                        <img src="assets/angularjs-shield.svg" title="Angular" alt="Angular" height="150" width="150">
-                    </div>
-                    <pre><code data-trim style="font-size:12px">
+        <section>
+          <ol>
+            <li><h4>Set a Goal and Objective(s)</h4>
+              <p class="fragment" data-fragment-index="1" style="font-size: 0.6em">"I become a better developer and
+                <span class="fragment fade-out" data-fragment-index="2" >build facebook"</span>
+                <span class="fragment" data-fragment-index="2" style="margin-left: -149px">build a feed of Squareknot Projects"</span></p>
+            </li>
+            <li class="fragment"><h4>Learn an "Open Source" Language</h4><small class="fragment">"Javascript looks cool"</small></li>
+            <li style="opacity: 0"><h4>Use Open Source Projects</h4><small>"Backbone has a great community"</small></li>
+            <li style="opacity: 0"><h4>Get Involved in the Community</h4><small>"Downloading Gitter"</small></li>
+          </ol>
+        </section>
+        <section>
+          <div class="squareknot logo">
+            <img src="assets/angularjs-shield.svg" title="Angular" alt="Angular" height="150" width="150">
+          </div>
+          <pre><code data-trim style="font-size:12px">
 <script src="lib/js/angular.min.js"></script>
 <div>
 <label>Name:</label>
 <input type="text" ng-model="yourName" placeholder="Enter a name here">
 <span>Hello {{yourName}}!</span>
 </div>
-                    </code></pre>
+          </code></pre>
 
-                    <script src="lib/js/angular.min.js"></script>
-                    <div ng-app>
-                        <div>
-                            <label>Name:</label>
-                            <input type="text" ng-model="yourName" placeholder="Enter a name here">
-                            <span>Hello {{yourName}}!</span>
-                        </div>
-                    </div>
-                </section>
+          <script src="lib/js/angular.min.js"></script>
+          <div ng-app>
+            <div>
+              <label>Name:</label>
+              <input type="text" ng-model="yourName" placeholder="Enter a name here">
+              <span>Hello {{yourName}}!</span>
+            </div>
+          </div>
+        </section>
 
-                <section>
-                    <div class="squareknot logo">
-                        <img src="assets/backbone.svg" title="Backbone" alt="Backbone" height="150" width="150">
-                    </div>
-                    <div>
+        <section>
+          <div class="squareknot logo">
+            <img src="assets/backbone.svg" title="Backbone" alt="Backbone" height="150" width="150">
+          </div>
+          <div>
 
-                        <pre><code data-trim style="font-size:12px; line-height:14px">
+            <pre><code data-trim style="font-size:12px; line-height:14px">
 <script src="lib/js/jquery-2.1.3.min.js"></script>
 <script src="lib/js/underscore-min.js"></script>
 <script src="lib/js/backbone-min.js"></script>
@@ -148,118 +148,118 @@
 <label>Name:</label> <input class="backbone_input" type="text" placeholder="Enter a name here">
 <span class="backbone_output">Hello !</span>
 </div>
-                        </code></pre>
-                    </div>
+            </code></pre>
+          </div>
 
-                    <div>
+          <div>
 
-                        <pre><code data-trim style="font-size:12px; line-height:14px">
+            <pre><code data-trim style="font-size:12px; line-height:14px">
 var NameOutputView = Backbone.View.extend({
 template: _.template("Hello <%- name %>!"),
 el: "#real_backbone_form",
 events: {
-    "keyup .backbone_input":    "updateModel"
+  "keyup .backbone_input":    "updateModel"
 },
 updateModel: function(e){
-    var name = $(e.currentTarget).val();
-    this.model.set({name:name});
+  var name = $(e.currentTarget).val();
+  this.model.set({name:name});
 },
 initialize: function() {
-    this.listenTo(this.model, "change", this.render);
+  this.listenTo(this.model, "change", this.render);
 },
 render: function() {
-    this.$el.children('.backbone_output').html(this.template(this.model.attributes));
-    return this;
+  this.$el.children('.backbone_output').html(this.template(this.model.attributes));
+  return this;
 }
 });
 new NameOutputView({ model: new Backbone.Model({name:null}) });
-                        </code></pre>
+            </code></pre>
 
-                        <div id="real_backbone_form">
-                            <label>Name:</label>
-                            <input class="backbone_input" type="text" placeholder="Enter a name here">
-                            <span class="backbone_output">Hello !</span>
-                        </div>
-                    </div>
-                    <script src="lib/js/jquery-2.1.3.min.js"></script>
-                    <script src="lib/js/underscore-min.js"></script>
-                    <script src="lib/js/backbone-min.js"></script>
-                    <script>
-                            var NameOutputView = Backbone.View.extend({
-                                template: _.template("Hello <%- name %>!"),
-                                el: "#real_backbone_form",
-                                events: {
-                                    "keyup .backbone_input":    "updateModel"
-                                },
-                                updateModel: function(e){
-                                    var name = $(e.currentTarget).val();
-                                    this.model.set({name:name});
-                                },
-                                initialize: function() {
-                                    this.listenTo(this.model, "change", this.render);
-                                },
-                                render: function() {
-                                    this.$el.children('.backbone_output').html(this.template(this.model.attributes));
-                                    return this;
-                                }
-                            });
-                            new NameOutputView({ model: new Backbone.Model({name:null}) });
-                    </script>
+            <div id="real_backbone_form">
+              <label>Name:</label>
+              <input class="backbone_input" type="text" placeholder="Enter a name here">
+              <span class="backbone_output">Hello !</span>
+            </div>
+          </div>
+          <script src="lib/js/jquery-2.1.3.min.js"></script>
+          <script src="lib/js/underscore-min.js"></script>
+          <script src="lib/js/backbone-min.js"></script>
+          <script>
+              var NameOutputView = Backbone.View.extend({
+                template: _.template("Hello <%- name %>!"),
+                el: "#real_backbone_form",
+                events: {
+                  "keyup .backbone_input":    "updateModel"
+                },
+                updateModel: function(e){
+                  var name = $(e.currentTarget).val();
+                  this.model.set({name:name});
+                },
+                initialize: function() {
+                  this.listenTo(this.model, "change", this.render);
+                },
+                render: function() {
+                  this.$el.children('.backbone_output').html(this.template(this.model.attributes));
+                  return this;
+                }
+              });
+              new NameOutputView({ model: new Backbone.Model({name:null}) });
+          </script>
 
-					</section>
+          </section>
 
-				<section>
-					<h3>Demo: Backbone Source</h3>
-				</section>
+        <section>
+          <h3>Demo: Backbone Source</h3>
+        </section>
 
-				<section>
-					<h3>Demo: Gitter</h3>
-				</section>
+        <section>
+          <h3>Demo: Gitter</h3>
+        </section>
 
-				<section>
-					<h2>contribute!</h2>
-				</section>
+        <section>
+          <h2>contribute!</h2>
+        </section>
 
-				<section data-transition="fade">
-					<h3>Closing Thoughts</h3>
-					<p>Important for Companies</p>
-					<p>Join MeetUps</p>
-					<p>Start Today</p>
-				</section>
+        <section data-transition="fade">
+          <h3>Closing Thoughts</h3>
+          <p>Important for Companies</p>
+          <p>Join MeetUps</p>
+          <p>Start Today</p>
+        </section>
 
-			</div>
+      </div>
 
-		</div>
+    </div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
 
-		<script>
+    <script>
 
-			// Full list of configuration options available at:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-				// Optional reveal.js plugins
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
-				]
-			});
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true }
+        ]
+      });
 
 
 
-		</script>
+    </script>
 
-	</body>
+  </body>
 </html>
