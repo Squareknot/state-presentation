@@ -98,18 +98,31 @@
           </ol>
         </section>
 <!--Everything below this line, is here to demonstrate how to make certain slides (like the code slide)-->
-
         <section>
+          <h3>State Architecture</h3>
           <ol>
-            <li><h4>Set a Goal and Objective(s)</h4>
-              <p class="fragment" data-fragment-index="1" style="font-size: 0.6em">"I become a better developer and
-                <span class="fragment fade-out" data-fragment-index="2" >build facebook"</span>
-                <span class="fragment" data-fragment-index="2" style="margin-left: -149px">build a feed of Squareknot Projects"</span></p>
+            <li class="fragment">
+              <h4>Core Backbone philosophy</h4>
+              <small>View renders model; view updates when a model changes.</small>
             </li>
-            <li class="fragment"><h4>Learn an "Open Source" Language</h4><small class="fragment">"Javascript looks cool"</small></li>
-            <li style="opacity: 0"><h4>Use Open Source Projects</h4><small>"Backbone has a great community"</small></li>
-            <li style="opacity: 0"><h4>Get Involved in the Community</h4><small>"Downloading Gitter"</small></li>
+            <li class="fragment">
+              <h4>Implementation</h4>
+              <small>Each and every change to the DOM corresponds to a model change.</small>
+            </li>
+            <li class="fragment">
+              <h4>Perfected implementation</h4>
+              <small>The view is <em>only</em> responsible for "dumb" updates.</small>
+            </li>
+            <li class="fragment">
+              <h4>What about presentation logic?</h4>
+            </li>
           </ol>
+        </section>
+        <section>
+          <h3>State Service</h3>
+          <div>
+            <img class="diagram" src="https://docs.google.com/drawings/d/13_kBAF5IIl2MbJkPDo4rj_U0VG-QKRv8mWkkwYIJFPI/pub?w=960&amp;h=720" style="height:520px">
+          </div>
         </section>
         <section>
           <div class="squareknot logo">

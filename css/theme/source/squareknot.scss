@@ -46,6 +46,12 @@ $selectionBackgroundColor: #134674;
   color:#6fc78b;
 }
 
+.reveal section img.diagram {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
 
 // Background generator
 //@mixin bodyBackground() {

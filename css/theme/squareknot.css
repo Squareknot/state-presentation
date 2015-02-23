@@ -18,6 +18,11 @@
 .reveal .slides section .fragment.highlight-green.visible {
   color: #6fc78b; }
 
+.reveal section img.diagram {
+  background: none;
+  border: none;
+  box-shadow: none; }
+
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
