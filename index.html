@@ -35,9 +35,7 @@
   </head>
 
   <body>
-
     <div class="reveal">
-
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section data-transition="fade">
@@ -53,10 +51,8 @@
           <p>Squareknot is a way to make beautiful, branching step by step guides.</p>
         </section>
         <section data-background="assets/images.png"></section>
-        <section  data-transition="fade" data-background="assets/projects.png">
-        </section>
-        <section  data-transition="fade" data-background="assets/branches.png">
-        </section>
+        <section data-transition="fade" data-background="assets/projects.png"></section>
+        <section data-transition="fade" data-background="assets/branches.png"></section>
         <section>
           <p>We can learn a lot from each other by <span class="bluetext">sharing</span> our ideas and <span class="bluetext">collaboratively</span> working together to <span class="bluetext">improve</span> them</p>
         </section>
@@ -66,7 +62,6 @@
           </div>
           <h2 style="margin-top: -120px">SQUAREKNOT</h2>
         </section>
-
         <section>
           <div class="fade-out" style="margin-top: 100px">
             <p>Technology Stack</p>
@@ -97,7 +92,6 @@
             </li>
           </ol>
         </section>
-<!--Everything below this line, is here to demonstrate how to make certain slides (like the code slide)-->
         <section>
           <h3>State Architecture</h3>
           <ol>
@@ -119,7 +113,7 @@
           </ol>
         </section>
         <section>
-          <h3>State Service</h3>
+          <h3>State Architecture</h3>
           <div>
             <img class="diagram" src="https://docs.google.com/drawings/d/13_kBAF5IIl2MbJkPDo4rj_U0VG-QKRv8mWkkwYIJFPI/pub?w=960&amp;h=720" height=520>
           </div>
@@ -141,14 +135,14 @@
             <img src="assets/angularjs-shield.svg" title="Angular" alt="Angular" height="150" width="150">
           </div>
           <pre><code data-trim style="font-size:12px">
-<script src="lib/js/angular.min.js"></script>
-<div>
-<label>Name:</label>
-<input type="text" ng-model="yourName" placeholder="Enter a name here">
-<span>Hello {{yourName}}!</span>
-</div>
+        <script src="lib/js/angular.min.js"></script>
+        <div>
+        <label>Name:</label>
+        <input type="text" ng-model="yourName" placeholder="Enter a name here">
+        <span>Hello {{yourName}}!</span>
+        </div>
           </code></pre>
-
+        
           <script src="lib/js/angular.min.js"></script>
           <div ng-app>
             <div>
@@ -158,48 +152,48 @@
             </div>
           </div>
         </section>
-
+        
         <section>
           <div class="squareknot logo">
             <img src="assets/backbone.svg" title="Backbone" alt="Backbone" height="150" width="150">
           </div>
           <div>
-
+        
             <pre><code data-trim style="font-size:12px; line-height:14px">
-<script src="lib/js/jquery-2.1.3.min.js"></script>
-<script src="lib/js/underscore-min.js"></script>
-<script src="lib/js/backbone-min.js"></script>
-<div id="backbone_form">
-<label>Name:</label> <input class="backbone_input" type="text" placeholder="Enter a name here">
-<span class="backbone_output">Hello !</span>
-</div>
+        <script src="lib/js/jquery-2.1.3.min.js"></script>
+        <script src="lib/js/underscore-min.js"></script>
+        <script src="lib/js/backbone-min.js"></script>
+        <div id="backbone_form">
+        <label>Name:</label> <input class="backbone_input" type="text" placeholder="Enter a name here">
+        <span class="backbone_output">Hello !</span>
+        </div>
             </code></pre>
           </div>
-
+        
           <div>
-
+        
             <pre><code data-trim style="font-size:12px; line-height:14px">
-var NameOutputView = Backbone.View.extend({
-template: _.template("Hello <%- name %>!"),
-el: "#real_backbone_form",
-events: {
-  "keyup .backbone_input":    "updateModel"
-},
-updateModel: function(e){
-  var name = $(e.currentTarget).val();
-  this.model.set({name:name});
-},
-initialize: function() {
-  this.listenTo(this.model, "change", this.render);
-},
-render: function() {
-  this.$el.children('.backbone_output').html(this.template(this.model.attributes));
-  return this;
-}
-});
-new NameOutputView({ model: new Backbone.Model({name:null}) });
+        var NameOutputView = Backbone.View.extend({
+        template: _.template("Hello <%- name %>!"),
+        el: "#real_backbone_form",
+        events: {
+        "keyup .backbone_input":    "updateModel"
+        },
+        updateModel: function(e){
+        var name = $(e.currentTarget).val();
+        this.model.set({name:name});
+        },
+        initialize: function() {
+        this.listenTo(this.model, "change", this.render);
+        },
+        render: function() {
+        this.$el.children('.backbone_output').html(this.template(this.model.attributes));
+        return this;
+        }
+        });
+        new NameOutputView({ model: new Backbone.Model({name:null}) });
             </code></pre>
-
+        
             <div id="real_backbone_form">
               <label>Name:</label>
               <input class="backbone_input" type="text" placeholder="Enter a name here">
@@ -230,37 +224,34 @@ new NameOutputView({ model: new Backbone.Model({name:null}) });
               });
               new NameOutputView({ model: new Backbone.Model({name:null}) });
           </script>
-
+        
           </section>
-
+        
         <section>
           <h3>Demo: Backbone Source</h3>
         </section>
-
+        
         <section>
           <h3>Demo: Gitter</h3>
         </section>
-
+        
         <section>
           <h2>contribute!</h2>
         </section>
-
+        
         <section data-transition="fade">
           <h3>Closing Thoughts</h3>
           <p>Important for Companies</p>
           <p>Join MeetUps</p>
           <p>Start Today</p>
         </section>
-
+        
       </div>
-
     </div>
 
     <script src="lib/js/head.min.js"></script>
     <script src="js/reveal.js"></script>
-
     <script>
-
       // Full list of configuration options available at:
       // https://github.com/hakimel/reveal.js#configuration
       Reveal.initialize({
@@ -281,10 +272,6 @@ new NameOutputView({ model: new Backbone.Model({name:null}) });
           { src: 'plugin/notes/notes.js', async: true }
         ]
       });
-
-
-
     </script>
-
   </body>
 </html>
