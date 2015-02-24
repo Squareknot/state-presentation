@@ -43,8 +43,7 @@
             <img src="assets/logo-green.svg" title="Squareknot" alt="Squareknot" height="500" width="500">
           </div>
           <p>
-            <small><a href="mailto">jide@squareknot.com</a> / <a href="http://twitter.com/jideosan">@jideosan</a></small>
-            <small><a href="mailto">ian@squareknot.com</a> / <a href="http://twitter.com/jideosan">@ianmstew</a></small>
+            <small><a href="mailto">jide@squareknot.com</a> / <a href="http://twitter.com/jideosan">@jideosan</a> ~ <a href="mailto">ian@squareknot.com</a> / <a href="http://twitter.com/jideosan">@ianmstew</a></small>
           </p>
         </section>
         <section>
@@ -69,7 +68,7 @@
               <h4>Three Application States</h4><small>Overview State, Step State, Branch State</small>
             </li>
             <li class="fragment">
-              <h4>State Interpretation</h4><small>States of Steps and Nodes depend on Application State</small>
+              <h4>Component State</h4><small>States of Steps and Nodes depend on Application State</small>
             </li>
             <li class="fragment">
               <h4>Multiple Sources</h4><small>States are based on data models and user interaction</small>
@@ -85,7 +84,7 @@
             </li>
             <li class="fragment">
               <h4>Key Rule</h4>
-              <small>Each and every change to the DOM starts with a model change.</small>
+              <small>Each and every change to the DOM corresponds to a model change.</small>
             </li>
             <li class="fragment">
               <h4>Decoupled Implementation</h4>
@@ -93,7 +92,7 @@
             </li>
             <li class="fragment">
               <h4>What about presentation logic?</h4>
-              <small>Need a container that handles update to the state.</small>
+              <small>Need a container that handles user interactions and updates the state.</small>
             </li>
           </ol>
         </section>
@@ -106,262 +105,9 @@
           <img class="diagram" src="https://docs.google.com/drawings/d/1pCjl-YrmWafHQJ8v3LqBmpaUsH6aeer4JA8dlHm4lpA/pub?w=915&amp;h=618">
         </section>
         <section>
-            <h3>Application State:Domain</h3>
-            <p>Goal: Create and Manage Persisted Entities</p>
-            <pre>
-                <code data-trim style="font-size:14px; line-height:14px">
-        ProjectDomainService = Marionette.Object.extend({
-        
-        initialize: function () {
-            this.createEntities();
-            this.channel = Radio.channel('project');
-        },
-        
-        start: function(data){
-            this.setEntities(data);
-            this.fetchEntities(data);
-        },
-        
-        //Getters and Setters
-        getProject: function () {
-            return this.models.projectModel;
-        },
-        
-        getSteps: function () {
-            return this.collections.stepsCollection;
-        },
-        
-        getStep: function ( id ) {
-            return this.collections.stepsCollection.findWhere({ id: id });
-        },
-        
-        getCurrentStep: function () {
-            var row = this.channel.request('state:row');
-            var step = this._rowToStep(row);
-            return this.getStep(step);
-        },...
-                </code>
-            </pre>
-        </section>
-        <section>
-            <h3>Application State:StateMachine</h3>
-            <p>Goal: Compute State based on Domain and User Interactions</p>
-            <pre>
-                <code data-trim style="font-size:14px; line-height:14px">
-        var ProjectStateService = Marionette.Object.extend({
-        
-        initialize: function (domain) {
-            this.domain = domain;
-        },
-        start: function() {
-            this.stateModel = new State();
-            this.channel = Radio.channel('project');
-            this.createFSM();
-            this.listenTo(this.channel, 'domain:fetched', this.setState);
-            this.listenTo(this.channel, 'domain:fetching', this.setLoadingState);
-            this.listenToOnce(this.stateModel, "change", function(){ this.channel.trigger('domain:ready');});
-            this.listenTo(this.stateModel, 'all', function(event, arguments){ this.channel.trigger('state:'+event, arguments) });
-            ...
-        },
-        
-        stop: function(){
-            ...
-        },
-        
-        //Getters and Setters
-        setLoadingState: function(){
-            this.stateMachine.handle('loading');
-        },
-        
-        setState: function (data) {
-            this.stateMachine.setRow(data.row);
-            this.stateMachine.setColumn(data.column);
-            this.stateMachine.handle('loaded');
-        },
-        
-        getState: function (attribute) {
-            if(attribute){
-                return this.stateModel.get(attribute);
-            }
-            return this.stateModel;
-        },
-        
-        changeState: function (event, parameters) {
-            this.stateMachine.handle(event, parameters);
-        },
-        
-        createFSM: function(){
-            var self = this;
-            this.stateMachine = new machina.Fsm({
-                initialState: "loading",
-                parent: self,
-                stateModel: this.stateModel,
-                inputs: {
-                    row: 0,
-                    column: 0
-                },
-        
-                states : {
-                    'loading': {
-                        _onEnter: function() {
-                            debugLogger.log('Loading...');
-                        },
-        
-                        _onExit: function() {
-                            debugLogger.log('Loaded');
-                        },
-        
-                        'loaded': function(){
-                            if(this.inputs.row === 0){
-                                this.setColumn(0);
-                                this.transition('cover');
-                            }
-                            else{
-                                if(this.inputs.column === 0){
-                                    this.transition('steps');
-                                }
-                                else{
-                                    this.transition('column');
-                                }
-                            }
-                        }
-                    },
-        
-                    "cover" : {
-                    _onEnter: function() {
-                        ...
-                    },
-        
-                    _onExit: function() {
-                        ...
-                    },
-        
-                    "loading": function(){
-                        this.transition('loading');
-                    },
-        
-                    "focus:cover" : function() {
-                        this.setRow(0);
-                        this.setColumn(0);
-                        this.stateModel.set(this.inputs);
-                    },
-        
-                    "focus:row" : function( row ) {
-                        debugLogger.log('cover to step');
-                        this.setRow(row);
-                        this.transition('steps');
-                    }
-        
-                },
-        
-        "steps" : {
-        _onEnter: function() {
-        debugLogger.log('enter steps State');
-        this.handle('focus:row')
-        },
-        
-        _onExit: function() {
-        debugLogger.log('exit steps State');
-        },
-        
-        "loading": function(){
-        this.transition('loading');
-        },
-        
-        "focus:row" : function( row ) {
-        debugLogger.log('step state model change');
-        this.setRow(row);
-        // Only reset column if row has changed
-        //TODO: Row shouldnt change is column is changing
-        if (row && row !== this.stateModel.get('row')) {
-        this.setColumn(0);
-        }
-        this.stateModel.set(this.inputs);
-        },
-        
-        "focus:cover" : function() {
-        debugLogger.log('step to cover');
-        this.transition('cover');
-        },
-        
-        "focus:column" : function( column ) {
-        debugLogger.log('step to column');
-        this.setColumn(column);
-        this.transition('columns');
-        }
-        },
-        
-        "columns" : {
-        _onEnter: function() {
-        debugLogger.log('enter columns State');
-        this.handle('focus:column');
-        },
-        
-        _onExit: function() {
-        debugLogger.log('exit columns State');
-        },
-        
-        "loading": function(){
-        this.transition('loading');
-        },
-        
-        "focus:column" : function( column ) {
-        debugLogger.log('column state model change');
-        this.setColumn(column);
-        this.stateModel.set(this.inputs);
-        },
-        
-        "focus:row" : function( row ) {
-        debugLogger.log('columns to step');
-        if(this.inputs.row !== row ){
-        debugLogger.log('CANT TRANSITION BETWEEN DIFFERENT STEPS IN column STATE');
-        }
-        this.transition('steps');
-        }
-        }
-        }
-        });
-        }
-                </code>
-            </pre>
-        </section>
-        <section>
-            <h3>Application State:Domain</h3>
-            <p>Goal: Create and Manage Persisted Entities</p>
-            <pre>
-                <code data-trim style="font-size:14px; line-height:14px">
-        ProjectDomainService = Marionette.Object.extend({
-        
-        initialize: function () {
-            this.createEntities();
-            this.channel = Radio.channel('project');
-        },
-        
-        start: function(data){
-            this.setEntities(data);
-            this.fetchEntities(data);
-        },
-        
-        //Getters and Setters
-        getProject: function () {
-            return this.models.projectModel;
-        },
-        
-        getSteps: function () {
-            return this.collections.stepsCollection;
-        },
-        
-        getStep: function ( id ) {
-            return this.collections.stepsCollection.findWhere({ id: id });
-        },
-        
-        getCurrentStep: function () {
-            var row = this.channel.request('state:row');
-            var step = this._rowToStep(row);
-            return this.getStep(step);
-        },...
-                </code>
-            </pre>
+            <h4>Application State: State Machine</h4>
+            <small>Goal: Compute State based on Domain and User Interactions</small>
+            <img class="diagram" src="https://docs.google.com/drawings/d/1fyVfqt_HUQjef23ZypKHqe0moLtgkvkFUIM2lYVacfo/pub?w=960&amp;h=720">
         </section>
         <section>
           <h3>Component State</h3>
@@ -401,122 +147,6 @@
         <section>
           <h3>Questions</h3>
         </section>
-        <section>
-          <div class="squareknot logo">
-            <img src="assets/angularjs-shield.svg" title="Angular" alt="Angular" height="150" width="150">
-          </div>
-          <pre><code data-trim style="font-size:12px">
-        <script src="lib/js/angular.min.js"></script>
-        <div>
-        <label>Name:</label>
-        <input type="text" ng-model="yourName" placeholder="Enter a name here">
-        <span>Hello {{yourName}}!</span>
-        </div>
-          </code></pre>
-        
-          <script src="lib/js/angular.min.js"></script>
-          <div ng-app>
-            <div>
-              <label>Name:</label>
-              <input type="text" ng-model="yourName" placeholder="Enter a name here">
-              <span>Hello {{yourName}}!</span>
-            </div>
-          </div>
-        </section>
-        
-        <section>
-          <div class="squareknot logo">
-            <img src="assets/backbone.svg" title="Backbone" alt="Backbone" height="150" width="150">
-          </div>
-          <div>
-        
-            <pre><code data-trim style="font-size:12px; line-height:14px">
-        <script src="lib/js/jquery-2.1.3.min.js"></script>
-        <script src="lib/js/underscore-min.js"></script>
-        <script src="lib/js/backbone-min.js"></script>
-        <div id="backbone_form">
-        <label>Name:</label> <input class="backbone_input" type="text" placeholder="Enter a name here">
-        <span class="backbone_output">Hello !</span>
-        </div>
-            </code></pre>
-          </div>
-        
-          <div>
-        
-            <pre><code data-trim style="font-size:12px; line-height:14px">
-        var NameOutputView = Backbone.View.extend({
-        template: _.template("Hello <%- name %>!"),
-        el: "#real_backbone_form",
-        events: {
-        "keyup .backbone_input":    "updateModel"
-        },
-        updateModel: function(e){
-        var name = $(e.currentTarget).val();
-        this.model.set({name:name});
-        },
-        initialize: function() {
-        this.listenTo(this.model, "change", this.render);
-        },
-        render: function() {
-        this.$el.children('.backbone_output').html(this.template(this.model.attributes));
-        return this;
-        }
-        });
-        new NameOutputView({ model: new Backbone.Model({name:null}) });
-            </code></pre>
-        
-            <div id="real_backbone_form">
-              <label>Name:</label>
-              <input class="backbone_input" type="text" placeholder="Enter a name here">
-              <span class="backbone_output">Hello !</span>
-            </div>
-          </div>
-          <script src="lib/js/jquery-2.1.3.min.js"></script>
-          <script src="lib/js/underscore-min.js"></script>
-          <script src="lib/js/backbone-min.js"></script>
-          <script>
-              var NameOutputView = Backbone.View.extend({
-                template: _.template("Hello <%- name %>!"),
-                el: "#real_backbone_form",
-                events: {
-                  "keyup .backbone_input":    "updateModel"
-                },
-                updateModel: function(e){
-                  var name = $(e.currentTarget).val();
-                  this.model.set({name:name});
-                },
-                initialize: function() {
-                  this.listenTo(this.model, "change", this.render);
-                },
-                render: function() {
-                  this.$el.children('.backbone_output').html(this.template(this.model.attributes));
-                  return this;
-                }
-              });
-              new NameOutputView({ model: new Backbone.Model({name:null}) });
-          </script>
-        
-          </section>
-        
-        <section>
-          <h3>Demo: Backbone Source</h3>
-        </section>
-        
-        <section>
-          <h3>Demo: Gitter</h3>
-        </section>
-        
-        <section>
-          <h2>contribute!</h2>
-        </section>
-        
-        <section data-transition="fade">
-          <h3>Closing Thoughts</h3>
-          <p>Important for Companies</p>
-          <p>Join MeetUps</p>
-          <p>Start Today</p>
-        </section>
-        
       </div>
     </div>
 
